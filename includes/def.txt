@@ -1,0 +1,11 @@
+//Mutex// : MUTual EXclusion, permet de proteger les donnees partagees
+pour eviter les modifications concurentes.
+-initialisation du Mutex
+-lock par un thread
+-unlock
+
+///pthread_mutex_lock(&ptr->mutex[id + 1] % ptr->numbers_of_philosophers); ///
+explication utilisation modulo: si il y a 5 philosophers que je suis a la 4eme
+fourchette (4 + 1) % 5 = 0. Pour ainsi former un cercle et que le 4eme philosopher
+partage une fourchette avec le philosopher 0. (entre dernier et premier)
+
