@@ -6,11 +6,20 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/26 00:19:11 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:53:04 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long int	get_time(void)
+{
+	struct timeval current_time;
+
+	gettimeofday(&current_time, NULL);
+	// seconde -> millisecondes  puis convertit les microsecondes -> milliseondes
+	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+}
 
 void	init_var(t_philo *ptr, char **argv)
 {
@@ -36,47 +45,44 @@ void	init_var(t_philo *ptr, char **argv)
 void	*action_philo(void *arg)
 {
 	t_philo *ptr;
+	static long int stop_time = 0;
 	
-
 	ptr = (t_philo *)arg;
 	//check si philo dead, faire une fonction pour check a chaque lancement de
 	//action_philo
-	//eating
-	start = 
+	//eating 
+	
 	pthread_mutex_lock(&ptr->mutex[ptr->id]);
-	printf("Philosopher %d has taken a fork\n", ptr->id);
+	stop_time = get_time();
+	printf("%ld %d has taken a fork\n", (stop_time - ptr->start_time), ptr->id);
 	pthread_mutex_lock(&ptr->mutex[(ptr->id + 1) % ptr->numbers_of_philosophers]);
-	printf("Philosopher %d has taken a fork\n", ptr->id);
-	printf("Philosopher %d is eating\n", ptr->id);
-	usleep(ptr->time_to_eat);
+	stop_time = get_time();
+	printf("%ld %d has taken a fork\n", (stop_time - ptr->start_time), ptr->id);
+	printf("%ld %d is eating\n", (stop_time - ptr->start_time), ptr->id);
+	usleep((ptr->time_to_eat * 1000));
 	//sleeping
 	pthread_mutex_unlock(&ptr->mutex[ptr->id]);
 	pthread_mutex_unlock(&ptr->mutex[(ptr->id + 1) % ptr->numbers_of_philosophers]);
-	printf("Philosopher %d is sleeping\n", ptr->id);
-	usleep(ptr->time_to_sleep);
+	
+	stop_time = get_time();
+	printf("%ld %d is sleeping\n", (stop_time - ptr->start_time), ptr->id);
+	usleep(ptr->time_to_sleep * 1000);
 	//thinking
-	printf("Philosopher %d is thinking\n", ptr->id);
+	stop_time = get_time();
+	printf("%ld %d is thinking\n", (stop_time - ptr->start_time), ptr->id);
 	return (NULL);
 }
 
-long int	get_time(void)
+void create_thread(t_philo *ptr)
 {
-	struct timeval current_time;
-
-	gettimeofday(&current_time, NULL);
-	// seconde -> millisecondes  puis convertit les microsecondes -> milliseondes
-	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+	ptr->id = 0;
+	while (ptr->id < ptr->numbers_of_philosophers)
+	{
+		pthread_create(&ptr->philosophe[ptr->id], NULL, action_philo, (void*)ptr);
+		pthread_join(ptr->philosophe[ptr->id], NULL);
+		ptr->id += 2;
+	}
 }
-
-/*void ft_usleep(long int time_given)
-{
-	long int start_time;
-
-	start_time = 0;
-	start_time = get_time();
-	while ((get_time() - start_time) < time_given)
-		usleep(time_given / 10);
-}*/
 
 int	main(int argc, char **argv)
 {
@@ -90,17 +96,8 @@ int	main(int argc, char **argv)
 	}
 	ptr = malloc(sizeof(t_philo));
 	init_var(ptr, argv);
-	ptr->id = 0;
-	while (ptr->id < ptr->numbers_of_philosophers)
-	{
-		pthread_mutex_init(&ptr->mutex[ptr->id], NULL);
-		ptr->id += 1;
-	}
-	ptr->id = 0;
-	while (ptr->id < ptr->numbers_of_philosophers)
-	{
-		pthread_create(&ptr->philosophe[ptr->id], NULL, action_philo, (void*)ptr);
-		ptr->id += 1;
-	}
+	ptr->start_time = get_time();
+	create_mutex(ptr);
+	create_thread(ptr);
 	return (0);
 }

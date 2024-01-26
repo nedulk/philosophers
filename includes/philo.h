@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/25 23:31:00 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/01/26 16:55:02 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ typedef struct s_philo
 	int	time_to_sleep;
 	int	number_of_times_each_philosopher_must_eat;
 	int	id;
-	pthread_mutex_t	*mutex;
+	long int start_time;
+	pthread_mutex_t	mutex; 
+	pthread_mutex_t	*fork;
 	pthread_t		*philosophe;
 	
 }	t_philo;
