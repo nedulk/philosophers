@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kleden <kleden@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/28 14:59:42 by kleden           ###   ########.fr       */
+/*   Updated: 2024/01/28 17:11:24 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_data
 {
 	t_philo *philosophe;
 	pthread_t *thread_id;
-	int	numbers_of_philosophers;
+	int	nb_of_philosophers;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;

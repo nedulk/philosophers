@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kleden <kleden@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/28 16:44:05 by kleden           ###   ########.fr       */
+/*   Updated: 2024/01/28 17:11:50 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_var(t_data *data, char **argv)
 
 	i = 0;
 	///INITIALISATIONS DES ARGUMENTS
-	data->numbers_of_philosophers = ft_atoi(argv[1]);
+	data->nb_of_philosophers = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
@@ -29,8 +29,8 @@ void	init_var(t_data *data, char **argv)
 	
 	//ALLOCATIONS
 	data->thread_id = malloc(sizeof(pthread_t) * data->nb_of_philosophers);
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->numbers_of_philosophers);
-	data->philosophe = malloc(sizeof(t_philo) * data->numbers_of_philosophers);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_of_philosophers);
+	data->philosophe = malloc(sizeof(t_philo) * data->nb_of_philosophers);
 	if (!data->philosophe || !data->thread_id || !data->forks)
 		return (0);
 
@@ -55,7 +55,6 @@ void	init_var(t_data *data, char **argv)
 		data->philosophe[i].data = data; // ainsi chaque philosophe a acces aux informations le concernant
 		data->philosophe[i].id = i;
 		data->philosophe[i].eat_count = 0;
-		data->philosophe[i].eating = 0;
 		pthread_mutex_init(&data->philosophe[i].lock, NULL);
 		i++
 	}
