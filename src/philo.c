@@ -3,101 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kleden <kleden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/26 17:53:04 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:44:05 by kleden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long int	get_time(void)
+void	init_var(t_data *data, char **argv)
 {
-	struct timeval current_time;
+	int i;
 
-	gettimeofday(&current_time, NULL);
-	// seconde -> millisecondes  puis convertit les microsecondes -> milliseondes
-	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
-}
+	i = 0;
+	///INITIALISATIONS DES ARGUMENTS
+	data->numbers_of_philosophers = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5])
+		data->number_of_meal = ft_atoi(argv[5]);
+	pthread_mutex_init(&data->message, NULL);
+	pthread_mutex_init(&data->lock, NULL);
+	
+	//ALLOCATIONS
+	data->thread_id = malloc(sizeof(pthread_t) * data->nb_of_philosophers);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->numbers_of_philosophers);
+	data->philosophe = malloc(sizeof(t_philo) * data->numbers_of_philosophers);
+	if (!data->philosophe || !data->thread_id || !data->forks)
+		return (0);
 
-void	init_var(t_philo *ptr, char **argv)
-{
-	if (!ptr)
+	//INITIALISATION ET ATTRIBUTION DES FOURCHETTES
+	while(i < data->nb_of_philosophers)
 	{
-		printf("ERROR\nMemory allocation failed\n");	
-		exit(0);
+		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
 	}
-	ptr->numbers_of_philosophers = ft_atoi(argv[1]);
-	ptr->time_to_die = ft_atoi(argv[2]);
-	ptr->time_to_eat = ft_atoi(argv[3]);
-	ptr->time_to_sleep = ft_atoi(argv [4]);
-	ptr->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
-	ptr->mutex = malloc(sizeof(pthread_mutex_t) * ptr->numbers_of_philosophers);
-	ptr->philosophe = malloc(sizeof(pthread_t) * ptr->numbers_of_philosophers);
-	if (!ptr->mutex || !ptr->philosophe)
+	i = 0;
+	while (i < data->nb_of_philosophers)
 	{
-		printf("ERROR\nMemory allocation failed\n");	
-		exit(0);
+		data->philosophe[i].l_fork = &data->forks[i];
+		data->philosophe[i].r_fork = &data->forks[i % (data->nb_of_philosophers - 1)];
+		i++;
 	}
-}
 
-void	*action_philo(void *arg)
-{
-	t_philo *ptr;
-	static long int stop_time = 0;
-	
-	ptr = (t_philo *)arg;
-	//check si philo dead, faire une fonction pour check a chaque lancement de
-	//action_philo
-	//eating 
-	
-	pthread_mutex_lock(&ptr->mutex[ptr->id]);
-	stop_time = get_time();
-	printf("%ld %d has taken a fork\n", (stop_time - ptr->start_time), ptr->id);
-	pthread_mutex_lock(&ptr->mutex[(ptr->id + 1) % ptr->numbers_of_philosophers]);
-	stop_time = get_time();
-	printf("%ld %d has taken a fork\n", (stop_time - ptr->start_time), ptr->id);
-	printf("%ld %d is eating\n", (stop_time - ptr->start_time), ptr->id);
-	usleep((ptr->time_to_eat * 1000));
-	//sleeping
-	pthread_mutex_unlock(&ptr->mutex[ptr->id]);
-	pthread_mutex_unlock(&ptr->mutex[(ptr->id + 1) % ptr->numbers_of_philosophers]);
-	
-	stop_time = get_time();
-	printf("%ld %d is sleeping\n", (stop_time - ptr->start_time), ptr->id);
-	usleep(ptr->time_to_sleep * 1000);
-	//thinking
-	stop_time = get_time();
-	printf("%ld %d is thinking\n", (stop_time - ptr->start_time), ptr->id);
-	return (NULL);
-}
-
-void create_thread(t_philo *ptr)
-{
-	ptr->id = 0;
-	while (ptr->id < ptr->numbers_of_philosophers)
+	//INITIALISATION DES CONSTANTES POUR TOUS LES PHILOSOPHES
+	i = 0;
+	while (i < data->nb_of_philosophers)
 	{
-		pthread_create(&ptr->philosophe[ptr->id], NULL, action_philo, (void*)ptr);
-		pthread_join(ptr->philosophe[ptr->id], NULL);
-		ptr->id += 2;
+		data->philosophe[i].data = data; // ainsi chaque philosophe a acces aux informations le concernant
+		data->philosophe[i].id = i;
+		data->philosophe[i].eat_count = 0;
+		data->philosophe[i].eating = 0;
+		pthread_mutex_init(&data->philosophe[i].lock, NULL);
+		i++
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_philo			*ptr;
+	t_data	data;
 
-	ptr = NULL;
-	if (argc != 6)
+	if (argc > 6 || argc < 5)
 	{
 		printf("ERROR\nMissing arguments/too much arguments\n");
-		exit(0);
+		return (0);
 	}
-	ptr = malloc(sizeof(t_philo));
-	init_var(ptr, argv);
-	ptr->start_time = get_time();
-	create_mutex(ptr);
-	create_thread(ptr);
+	init_var(&ptr, argv);
+	data->start_time = get_time();
+	init_thread(data);
+
 	return (0);
 }
