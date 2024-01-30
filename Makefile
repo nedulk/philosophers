@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kleden <kleden@student.42.fr>              +#+  +:+       +#+         #
+#    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/01/28 00:42:24 by kleden           ###   ########.fr        #
+#    Updated: 2024/01/29 16:12:18 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRCS =	src/philo.c \
-		src/philo_utils.c 	
+		src/philo_utils.c \
+		src/actions_philo.c
 
 OBJS = ${SRCS:.c=.o}
 
