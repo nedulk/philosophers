@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/30 18:09:53 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:22:48 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	start_routine(t_philo *data)
 			pthread_join(data->philo[id], NULL);
 			id++;
 		}
-		usleep(10);
 	}
 }
 
