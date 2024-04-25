@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/25 18:29:30 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:08:37 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_var(t_philo *data, char **argv)
 	pthread_mutex_init(&data->check_death, NULL);
 	pthread_mutex_init(&data->time_mutex, NULL);
 	pthread_mutex_init(&data->philo_died, NULL);
+	pthread_mutex_init(&data->eat_count_mutex, NULL);
 	
 	//ALLOCATIONS
 	data->last_meal_time = malloc(sizeof(long int) * data->nb_of_philosophers);
@@ -89,8 +90,14 @@ void	init_var(t_philo *data, char **argv)
 
 int every_philo_ate(t_philo *data, int id)
 {
+	pthread_mutex_lock(&data->eat_count_mutex);
 	if (data->eat_count[id] > data->number_of_meal)
+	{
+		pthread_mutex_unlock(&data->eat_count_mutex);
 		return (1);
+	}
+	else
+		pthread_mutex_unlock(&data->eat_count_mutex);
 	return (0);
 }
 void *death_check_routine(void* arg)
@@ -118,10 +125,14 @@ void *eat_count_check_routine(void* arg)
 	id = 0;
 	while (1)
 	{
+		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 1)
 		{
+			pthread_mutex_unlock(&data->philo_died);
 			return (NULL);
 		}
+		else
+			pthread_mutex_unlock(&data->philo_died);
 		if (data->number_of_meal != -1 && every_philo_ate(data, id) == 1)
 		{
 			printf(GREEN "Everyone ate enough\n" RESET);

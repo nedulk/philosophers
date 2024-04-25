@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/25 17:34:15 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:11:34 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	pthread_t		*philo;
 	pthread_mutex_t	check_death;
 	pthread_mutex_t	philo_died;
+	pthread_mutex_t	eat_count_mutex;
 	pthread_mutex_t	*last_meal_mutex;
 	pthread_mutex_t	time_mutex;
 	pthread_mutex_t	print;
