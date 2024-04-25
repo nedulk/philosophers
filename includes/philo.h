@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/01/30 16:37:25 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:27:41 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# define RESET   "\x1B[0m"
+# define RED     "\x1B[31m"
+# define GREEN   "\x1B[32m"
+# define YELLOW  "\x1B[33m"
+# define BLUE    "\x1B[34m"
+# define MAGENTA "\x1B[35m"
+# define CYAN    "\x1B[36m"
+# define WHITE   "\x1B[37m"
+
+# define R   "\x1B[31m"
+# define G   "\x1B[32m"
+# define Y   "\x1B[33m"
+# define RESET "\x1B[0m"
+
 typedef struct s_philo
 {
 	int				id;
@@ -27,20 +41,31 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_meal;
+	int 			one_philo_died;
 	long int		start_time;
 	long int		stop_time;
 	int*			eat_count;
+	int*			last_meal;
+	long int*		last_meal_time;
 	pthread_t		*philo;
+	pthread_mutex_t	check_death;
 	pthread_mutex_t	print;
-	pthread_mutex_t sleep;
+	pthread_mutex_t	sleep;
 	pthread_mutex_t	*philo_lock;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_id;
 	
 }	t_philo;
 
+typedef struct s_philo_data {
+    t_philo *data;
+    int id;
+} t_philo_data;
+
+
 int			ft_atoi(char *str);
-void*		eat(void *arg);
+int check_death_philo(t_philo *data, int id);
+void*		start_dinner(void *arg, int id);
 long int	get_time(void);
 
 #endif
