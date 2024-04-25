@@ -6,7 +6,7 @@
 #    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/04/24 15:28:52 by kprigent         ###   ########.fr        #
+#    Updated: 2024/04/25 18:39:58 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,3 +55,4 @@ re:	fclean all
 # - ./philo 4 214748364732 200 200    argument invalide
 # - ./philo 4 200 210 200    un philo meurt, il faut afficher la mort avant 210 ms
 # - valgrind --tool=helgrind ou valgrind --tool=drd
+# ./philo 2 250 150 100 pb

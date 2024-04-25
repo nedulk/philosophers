@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/24 18:19:57 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:29:30 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	init_var(t_philo *data, char **argv)
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->sleep, NULL);
 	pthread_mutex_init(&data->check_death, NULL);
+	pthread_mutex_init(&data->time_mutex, NULL);
+	pthread_mutex_init(&data->philo_died, NULL);
 	
 	//ALLOCATIONS
 	data->last_meal_time = malloc(sizeof(long int) * data->nb_of_philosophers);
@@ -39,6 +41,7 @@ void	init_var(t_philo *data, char **argv)
 	data->philo = malloc(sizeof(pthread_t) * data->nb_of_philosophers);
 	data->philo_lock = malloc(sizeof(pthread_mutex_t) * data->nb_of_philosophers);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_of_philosophers);
+	data->last_meal_mutex = malloc(sizeof(pthread_mutex_t) * data->nb_of_philosophers);
 	data->eat_count = malloc(sizeof(int) * data->nb_of_philosophers);
 	if (!data->philo || !data->philo_lock || !data->forks
 		|| !data->eat_count)
@@ -74,6 +77,12 @@ void	init_var(t_philo *data, char **argv)
 	while (id < data->nb_of_philosophers)
 	{
 		pthread_mutex_init(&data->philo_lock[id], NULL);
+		id++;
+	}
+	id = 0;
+	while (id < data->nb_of_philosophers)
+	{
+		pthread_mutex_init(&data->last_meal_mutex[id], NULL);
 		id++;
 	}
 }
@@ -133,8 +142,13 @@ void *philo_routine(void* arg)
 	{
 		if (id % 2 == 0)
 			usleep(100);
+		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 1)
+		{
+			pthread_mutex_unlock(&data->philo_died);	
 			return (NULL);
+		}
+		pthread_mutex_unlock(&data->philo_died);
 		start_dinner(data, id);
 	}
 	return (NULL);
@@ -150,7 +164,8 @@ void ft_join(t_philo *data, pthread_t death_check_thread, pthread_t eat_count_ch
 		pthread_join(data->philo[id], &return_value);
 		id++;
 	}
-	pthread_join(eat_count_check_thread, &return_value);
+	if (data->number_of_meal != -1)
+		pthread_join(eat_count_check_thread, &return_value);
 	pthread_join(death_check_thread, &return_value);
 }
 
