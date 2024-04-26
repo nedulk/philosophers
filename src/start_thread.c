@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 17:45:12 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:17:54 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	*death_check_routine(void *arg)
 			return (NULL);
 		}
 		id = (id + 1) % data->nb_of_philosophers;
-		//usleep(5 * 1000);
 	}
 	return (NULL);
 }
