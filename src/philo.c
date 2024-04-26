@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 16:01:50 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:03:40 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int	main(int argc, char **argv)
 		printf("0 1 has taken a fork\n");
 	data.start_time = get_time();
 	start_routine(&data);
+	free_memory(&data);
 	return (0);
 }

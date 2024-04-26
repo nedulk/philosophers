@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 15:30:37 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:05:54 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ int			parsing(int argc, char **argv);
 void		start_routine(t_philo *data);
 int			check_death_philo(t_philo *data, int id);
 void		*start_dinner(void *arg, int id);
+void		free_memory(t_philo *data);
 
 #endif

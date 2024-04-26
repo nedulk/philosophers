@@ -6,23 +6,29 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 16:13:21 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:45:12 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	every_philo_ate(t_philo *data, int id)
+int	every_philo_ate(t_philo *data)
 {
+	int	id;
+
 	pthread_mutex_lock(&data->eat_count_mutex);
-	if (data->eat_count[id] > data->number_of_meal)
+	id = 0;
+	while (id < data->nb_of_philosophers)
 	{
-		pthread_mutex_unlock(&data->eat_count_mutex);
-		return (1);
+		if (data->eat_count[id] <= data->number_of_meal)
+		{
+			pthread_mutex_unlock(&data->eat_count_mutex);
+			return (0);
+		}
+		id++;
 	}
-	else
-		pthread_mutex_unlock(&data->eat_count_mutex);
-	return (0);
+	pthread_mutex_unlock(&data->eat_count_mutex);
+	return (1);
 }
 
 void	*death_check_routine(void *arg)
@@ -39,7 +45,7 @@ void	*death_check_routine(void *arg)
 			return (NULL);
 		}
 		id = (id + 1) % data->nb_of_philosophers;
-		usleep(5 * 1000);
+		//usleep(5 * 1000);
 	}
 	return (NULL);
 }
@@ -61,10 +67,11 @@ void	*eat_count_check_routine(void *arg)
 		}
 		else
 			pthread_mutex_unlock(&data->philo_died);
-		if (data->number_of_meal != -1 && every_philo_ate(data, id) == 1)
+		if (data->number_of_meal != -1 && every_philo_ate(data) == 1)
 		{
 			printf(GREEN "Everyone ate enough\n" RESET);
-			exit(0);
+			data->one_philo_died = 1;
+			return (NULL);
 		}
 		id = (id + 1) % data->nb_of_philosophers;
 	}

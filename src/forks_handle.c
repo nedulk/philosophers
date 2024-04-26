@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   forks_handlee.c                                    :+:      :+:    :+:   */
+/*   forks_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:48:03 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 14:50:50 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:49:40 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_fork_message(t_philo *data, int id)
 	{
 		pthread_mutex_lock(&data->time_mutex);
 		printf("%ld %d has taken a fork\n",
-			(data->stop_time - data->start_time), id);
+			(data->stop_time - data->start_time), id + 1);
 		pthread_mutex_unlock(&data->time_mutex);
 	}
 	pthread_mutex_unlock(&data->philo_died);
@@ -69,7 +69,7 @@ void	drop_forks(t_philo *data, int id)
 		pthread_mutex_unlock(&data->philo_died);
 		pthread_mutex_lock(&data->time_mutex);
 		printf("%ld %d is sleeping\n",
-			(data->stop_time - data->start_time), id);
+			(data->stop_time - data->start_time), id + 1);
 		pthread_mutex_unlock(&data->time_mutex);
 		usleep(data->time_to_sleep * 1000);
 	}

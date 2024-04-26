@@ -6,7 +6,7 @@
 #    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/04/26 15:55:23 by kprigent         ###   ########.fr        #
+#    Updated: 2024/04/26 17:06:14 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS =	src/philo.c \
 		src/actions_philo.c \
 		src/check_death.c \
 		src/parsing.c \
+		src/free_memory.c \
 		src/start_thread.c
 
 OBJS = ${SRCS:.c=.o}
@@ -46,6 +47,7 @@ re:	fclean all
 
 .PHONY: all clean fclean re
 
+### changer exit a ate enought
 # - ./philo 1 200 200 200    philo 1 ne prend qu'une fourchette et meurt au bout de 200 ms
 # - ./philo 2 800 200 200    personne ne meurt
 # - ./philo 5 800 200 200    personne ne meurt // mort dans certains cas
