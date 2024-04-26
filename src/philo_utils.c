@@ -6,11 +6,19 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:03:41 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 12:43:04 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:50:34 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long int	get_time(void)
+{
+	struct timeval current_time;
+
+	gettimeofday(&current_time, NULL);
+	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+}
 
 int	ft_strlen(char *str)
 {

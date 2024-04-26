@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 12:43:57 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:57:44 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,29 @@ typedef struct s_philo_data {
     int id;
 } t_philo_data;
 
+///INITIALISATION
+void	init_forks_and_locks(t_philo *data);
+void	init_arrays(t_philo *data);
+void	allocate_memory(t_philo *data);
+void	init_mutexes(t_philo *data);
+void	init_vars(t_philo *data, char **argv);
 
-int			parsing(int argc, char **argv);
+///ROUTINE
+void	*death_check_routine(void* arg);
+void	*eat_count_check_routine(void* arg);
+void	*philo_routine(void *arg);
+void	*start_dinner(void *arg, int id);
+void	ft_join(t_philo *data, pthread_t death_check_thread, 
+			pthread_t eat_count_check_thread);
+
+///UTILS
 char		*ft_strdup(const char *src);
 int			ft_strlen(char *str);
 long int	ft_atoi(const char *str);
+
+int			parsing(int argc, char **argv);
+void		start_routine(t_philo *data);
+long int	get_time(void);
 int			check_death_philo(t_philo *data, int id);
 void*		start_dinner(void *arg, int id);
 long int	get_time(void);

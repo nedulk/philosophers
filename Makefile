@@ -6,16 +6,18 @@
 #    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/04/26 13:06:51 by kprigent         ###   ########.fr        #
+#    Updated: 2024/04/26 13:55:35 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRCS =	src/philo.c \
+		src/init.c \
 		src/philo_utils.c \
 		src/actions_philo.c \
 		src/parsing.c \
+		src/start_thread.c
 
 OBJS = ${SRCS:.c=.o}
 

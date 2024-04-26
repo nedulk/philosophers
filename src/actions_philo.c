@@ -6,20 +6,11 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:34:28 by kleden            #+#    #+#             */
-/*   Updated: 2024/04/26 11:24:19 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:50:15 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-long int	get_time(void)
-{
-	struct timeval current_time;
-
-	gettimeofday(&current_time, NULL);
-	// seconde -> millisecondes  puis convertit les microsecondes -> milliseondes
-	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
-}
 
 int	take_forks(t_philo *data, int id)
 {
