@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 13:57:44 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:17:06 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void	*death_check_routine(void* arg);
 void	*eat_count_check_routine(void* arg);
 void	*philo_routine(void *arg);
 void	*start_dinner(void *arg, int id);
+int 	check_death_philo(t_philo *data, int id);
+int		take_forks(t_philo *data, int id);
+void	drop_forks(t_philo *data, int id);
 void	ft_join(t_philo *data, pthread_t death_check_thread, 
 			pthread_t eat_count_check_thread);
 

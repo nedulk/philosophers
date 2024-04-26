@@ -6,7 +6,7 @@
 #    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/04/26 13:55:35 by kprigent         ###   ########.fr        #
+#    Updated: 2024/04/26 14:27:22 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ NAME = philo
 SRCS =	src/philo.c \
 		src/init.c \
 		src/philo_utils.c \
+		src/forks_handle.c \
 		src/actions_philo.c \
+		src/check_death.c \
 		src/parsing.c \
 		src/start_thread.c
 
