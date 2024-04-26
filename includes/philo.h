@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 14:17:06 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:30:37 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_meal;
-	int 			one_philo_died;
+	int				one_philo_died;
 	long int		start_time;
 	long int		stop_time;
-	int*			eat_count;
-	int*			last_meal;
-	long int*		last_meal_time;
+	int				*eat_count;
+	int				*last_meal;
+	long int		*last_meal_time;
 	pthread_t		*philo;
 	pthread_mutex_t	check_death;
 	pthread_mutex_t	philo_died;
@@ -58,42 +58,41 @@ typedef struct s_philo
 	pthread_mutex_t	*philo_lock;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_id;
-	
+
 }	t_philo;
 
-typedef struct s_philo_data {
-    t_philo *data;
-    int id;
-} t_philo_data;
+typedef struct s_philo_data
+{
+	t_philo	*data;
+	int		id;
+
+}	t_philo_data;
 
 ///INITIALISATION
-void	init_forks_and_locks(t_philo *data);
-void	init_arrays(t_philo *data);
-void	allocate_memory(t_philo *data);
-void	init_mutexes(t_philo *data);
-void	init_vars(t_philo *data, char **argv);
+void		init_forks_and_locks(t_philo *data);
+void		init_arrays(t_philo *data);
+void		allocate_memory(t_philo *data);
+void		init_mutexes(t_philo *data);
+void		init_vars(t_philo *data, char **argv);
 
 ///ROUTINE
-void	*death_check_routine(void* arg);
-void	*eat_count_check_routine(void* arg);
-void	*philo_routine(void *arg);
-void	*start_dinner(void *arg, int id);
-int 	check_death_philo(t_philo *data, int id);
-int		take_forks(t_philo *data, int id);
-void	drop_forks(t_philo *data, int id);
-void	ft_join(t_philo *data, pthread_t death_check_thread, 
-			pthread_t eat_count_check_thread);
+void		*death_check_routine(void *arg);
+void		*eat_count_check_routine(void *arg);
+void		*philo_routine(void *arg);
+void		*start_dinner(void *arg, int id);
+int			check_death_philo(t_philo *data, int id);
+int			take_forks(t_philo *data, int id);
+void		drop_forks(t_philo *data, int id);
+void		ft_join(t_philo *data, pthread_t death_check_thread,
+				pthread_t eat_count_check_thread);
 
-///UTILS
+long int	ft_atoi(const char *str);
+long int	get_time(void);
 char		*ft_strdup(const char *src);
 int			ft_strlen(char *str);
-long int	ft_atoi(const char *str);
-
 int			parsing(int argc, char **argv);
 void		start_routine(t_philo *data);
-long int	get_time(void);
 int			check_death_philo(t_philo *data, int id);
-void*		start_dinner(void *arg, int id);
-long int	get_time(void);
+void		*start_dinner(void *arg, int id);
 
 #endif

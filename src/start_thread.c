@@ -6,13 +6,13 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 13:56:27 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:13:21 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int every_philo_ate(t_philo *data, int id)
+int	every_philo_ate(t_philo *data, int id)
 {
 	pthread_mutex_lock(&data->eat_count_mutex);
 	if (data->eat_count[id] > data->number_of_meal)
@@ -24,12 +24,14 @@ int every_philo_ate(t_philo *data, int id)
 		pthread_mutex_unlock(&data->eat_count_mutex);
 	return (0);
 }
-void *death_check_routine(void* arg)
+
+void	*death_check_routine(void *arg)
 {
-	t_philo *data = (t_philo *)arg;
-	int id;
+	t_philo	*data;
+	int		id;
 
 	id = 0;
+	data = (t_philo *)arg;
 	while (1)
 	{
 		if (check_death_philo(data, id) == 1)
@@ -37,16 +39,18 @@ void *death_check_routine(void* arg)
 			return (NULL);
 		}
 		id = (id + 1) % data->nb_of_philosophers;
+		usleep(5 * 1000);
 	}
 	return (NULL);
 }
 
-void *eat_count_check_routine(void* arg)
+void	*eat_count_check_routine(void *arg)
 {
-	t_philo *data = (t_philo *)arg;
-	int id;
+	t_philo	*data;
+	int		id;
 
 	id = 0;
+	data = (t_philo *)arg;
 	while (1)
 	{
 		pthread_mutex_lock(&data->philo_died);
@@ -67,12 +71,15 @@ void *eat_count_check_routine(void* arg)
 	return (NULL);
 }
 
-void *philo_routine(void* arg)
+void	*philo_routine(void *arg)
 {
-	t_philo_data *philo_data = (t_philo_data *)arg;
-	t_philo *data = philo_data->data;
-	int id = philo_data->id;
+	t_philo_data	*philo_data;
+	t_philo			*data;
+	int				id;
 
+	philo_data = (t_philo_data *)arg;
+	data = philo_data->data;
+	id = philo_data->id;
 	while (1)
 	{
 		if (id % 2 == 0)
@@ -80,7 +87,7 @@ void *philo_routine(void* arg)
 		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 1)
 		{
-			pthread_mutex_unlock(&data->philo_died);	
+			pthread_mutex_unlock(&data->philo_died);
 			return (NULL);
 		}
 		pthread_mutex_unlock(&data->philo_died);
@@ -89,11 +96,13 @@ void *philo_routine(void* arg)
 	return (NULL);
 }
 
-void ft_join(t_philo *data, pthread_t death_check_thread, pthread_t eat_count_check_thread)
+void	ft_join(t_philo *data, pthread_t death_check_thread,
+	pthread_t eat_count_check_thread)
 {
-	int id = 0;
-	void *return_value;
-	
+	int		id;
+	void	*return_value;
+
+	id = 0;
 	while (id < data->nb_of_philosophers)
 	{
 		pthread_join(data->philo[id], &return_value);

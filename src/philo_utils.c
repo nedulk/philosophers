@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:03:41 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 13:50:34 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:56:10 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long int	get_time(void)
 {
-	struct timeval current_time;
+	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
 	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
@@ -29,6 +29,7 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
 static int	ft_len(const char *src)
 {
 	int	i;
@@ -56,30 +57,31 @@ char	*ft_strdup(const char *src)
 	target[i] = '\0';
 	return (target);
 }
+
 long int	ft_atoi(const char *str)
 {
-    int	i;
-    int	m;
-    long int	stock;
+	int			i;
+	int			m;
+	long int	stock;
 
-    i = 0;
-    stock = 0;
-    m = 0;
-    while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-        i++;
-    if (str[i] == '-' || str[i] == '+')
-    {
-        if (str[i] == '-')
-            m++;
-        i++;
-    }
-    while (str[i] >= '0' && str[i] <= '9')
-    {
-        stock = stock * 10 + (str[i] - 48);
-        i++;
-    }
-    if (m == 1)
-        return (-stock);
-    else
-        return (stock);
+	i = 0;
+	stock = 0;
+	m = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			m++;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		stock = stock * 10 + (str[i] - 48);
+		i++;
+	}
+	if (m == 1)
+		return (-stock);
+	else
+		return (stock);
 }

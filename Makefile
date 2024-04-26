@@ -6,7 +6,7 @@
 #    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/04/26 14:27:22 by kprigent         ###   ########.fr        #
+#    Updated: 2024/04/26 15:55:23 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ re:	fclean all
 
 # - ./philo 1 200 200 200    philo 1 ne prend qu'une fourchette et meurt au bout de 200 ms
 # - ./philo 2 800 200 200    personne ne meurt
-# - ./philo 5 800 200 200    personne ne meurt
+# - ./philo 5 800 200 200    personne ne meurt // mort dans certains cas
 # - ./philo 5 800 200 200 7    la simulation s'arrete quand chaque philo a mange 7 fois // actions apres "everyone ate"
 # - ./philo 4 410 200 200    personne ne meurt
 # - ./philo 4 310 200 200    un philo meurt
