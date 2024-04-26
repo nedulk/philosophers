@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:34:28 by kleden            #+#    #+#             */
-/*   Updated: 2024/04/25 19:44:33 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:24:19 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	take_forks(t_philo *data, int id)
 {
     int next_id = (id + 1) % (data->nb_of_philosophers);
 
-    if (id < next_id) {
+    if (id < next_id) 
+	{
         pthread_mutex_lock(&data->forks[id]);
         if (data->nb_of_philosophers == 1)
         {
@@ -33,7 +34,9 @@ int	take_forks(t_philo *data, int id)
             return (1);
         }
         pthread_mutex_lock(&data->forks[next_id]);
-    } else {
+    } 
+	else 
+	{
         pthread_mutex_lock(&data->forks[next_id]);
         if (data->nb_of_philosophers == 1)
         {
@@ -42,11 +45,9 @@ int	take_forks(t_philo *data, int id)
         }
         pthread_mutex_lock(&data->forks[id]);
     }
-
     pthread_mutex_lock(&data->time_mutex);
     data->stop_time = get_time();
     pthread_mutex_unlock(&data->time_mutex);
-
     pthread_mutex_lock(&data->philo_died);
     if (data->one_philo_died == 0)
     {
@@ -68,7 +69,6 @@ int	take_forks(t_philo *data, int id)
         pthread_mutex_unlock(&data->time_mutex);
     }
     pthread_mutex_unlock(&data->philo_died);
-
     return (0);
 }
 
@@ -130,7 +130,6 @@ int check_death_philo(t_philo *data, int id)
 	pthread_mutex_lock(&data->time_mutex);
 	stop_m_start = data->stop_time - data->start_time;
 	pthread_mutex_unlock(&data->time_mutex);
-	
 	pthread_mutex_lock(&data->last_meal_mutex[id]);
 	if ((data->last_meal_time[id] != 0 && ((data->stop_time - data->last_meal_time[id]) >= data->time_to_die)))
 	{
@@ -159,6 +158,7 @@ int check_death_philo(t_philo *data, int id)
 void* start_dinner(void *arg, int id)
 {
 	t_philo *data = (t_philo *)arg;
+	
 
 	if (take_forks(data, id) == 1)
 	{

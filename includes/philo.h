@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:23:29 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/25 19:11:34 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:43:57 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,11 @@ typedef struct s_philo_data {
 } t_philo_data;
 
 
-int			ft_atoi(char *str);
-int check_death_philo(t_philo *data, int id);
+int			parsing(int argc, char **argv);
+char		*ft_strdup(const char *src);
+int			ft_strlen(char *str);
+long int	ft_atoi(const char *str);
+int			check_death_philo(t_philo *data, int id);
 void*		start_dinner(void *arg, int id);
 long int	get_time(void);
 

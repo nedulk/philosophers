@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/25 20:08:37 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:21:37 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,11 +205,8 @@ int	main(int argc, char **argv)
 {
 	t_philo	data;
 
-	if (argc > 6 || argc < 5)
-	{
-		printf("ERROR\nMissing arguments/too much arguments\n");
+	if (parsing(argc, argv) == 0)
 		return (0);
-	}
 	init_var(&data, argv);
 	data.start_time = get_time();
 	start_routine(&data);

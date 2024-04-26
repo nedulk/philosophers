@@ -6,7 +6,7 @@
 #    By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 20:09:16 by kprigent          #+#    #+#              #
-#    Updated: 2024/04/25 19:36:43 by kprigent         ###   ########.fr        #
+#    Updated: 2024/04/26 13:06:51 by kprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = philo
 
 SRCS =	src/philo.c \
 		src/philo_utils.c \
-		src/actions_philo.c
+		src/actions_philo.c \
+		src/parsing.c \
 
 OBJS = ${SRCS:.c=.o}
 
@@ -44,11 +45,11 @@ re:	fclean all
 # - ./philo 1 200 200 200    philo 1 ne prend qu'une fourchette et meurt au bout de 200 ms
 # - ./philo 2 800 200 200    personne ne meurt
 # - ./philo 5 800 200 200    personne ne meurt
-## - ./philo 5 800 200 200 7    la simulation s'arrete quand chaque philo a mange 7 fois
+# - ./philo 5 800 200 200 7    la simulation s'arrete quand chaque philo a mange 7 fois // actions apres "everyone ate"
 # - ./philo 4 410 200 200    personne ne meurt
 # - ./philo 4 310 200 200    un philo meurt
 # - ./philo 4 500 200 1.2    argument invalide
-# - ./philo 4 0 200 200    argument invalide
+# - ./philo 4 0 200 200    argument invalide // pas gere
 # - ./philo 4 -500 200 200    argument invalide
 # - ./philo 4 500 200 2147483647    un philo meurt au bout de 500 ms
 # - ./philo 4 2147483647 200 200    personne ne meurt
