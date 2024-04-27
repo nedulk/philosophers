@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 18:17:54 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:25:12 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void	*death_check_routine(void *arg)
 	data = (t_philo *)arg;
 	while (1)
 	{
+		usleep(100);
 		if (check_death_philo(data, id) == 1)
-		{
 			return (NULL);
-		}
 		id = (id + 1) % data->nb_of_philosophers;
 	}
 	return (NULL);
@@ -58,6 +57,7 @@ void	*eat_count_check_routine(void *arg)
 	data = (t_philo *)arg;
 	while (1)
 	{
+		usleep(100);
 		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 1)
 		{

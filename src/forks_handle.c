@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:48:03 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 16:49:40 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:11:34 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,13 @@ void	print_fork_message(t_philo *data, int id)
 
 int	take_forks(t_philo *data, int id)
 {
-	if (id < ((id + 1) % (data->nb_of_philosophers)))
+	pthread_mutex_lock(&data->forks[id]);
+	if (data->nb_of_philosophers == 1)
 	{
-		pthread_mutex_lock(&data->forks[id]);
-		if (data->nb_of_philosophers == 1)
-		{
-			pthread_mutex_unlock(&data->forks[id]);
-			return (1);
-		}
-		pthread_mutex_lock(&data->forks[(id + 1) % (data->nb_of_philosophers)]);
+		pthread_mutex_unlock(&data->forks[id]);
+		return (1);
 	}
-	else
-	{
-		pthread_mutex_lock(&data->forks[(id + 1) % (data->nb_of_philosophers)]);
-		if (data->nb_of_philosophers == 1)
-		{
-			pthread_mutex_unlock(&data->forks[(id + 1)
-				% (data->nb_of_philosophers)]);
-			return (1);
-		}
-		pthread_mutex_lock(&data->forks[id]);
-	}
+	pthread_mutex_lock(&data->forks[(id + 1) % (data->nb_of_philosophers)]);
 	print_fork_message(data, id);
 	print_fork_message(data, id);
 	return (0);
