@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/27 12:25:12 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:00:40 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*death_check_routine(void *arg)
 	data = (t_philo *)arg;
 	while (1)
 	{
-		usleep(100);
+		usleep(3 * 1000);
 		if (check_death_philo(data, id) == 1)
 			return (NULL);
 		id = (id + 1) % data->nb_of_philosophers;
@@ -57,7 +57,6 @@ void	*eat_count_check_routine(void *arg)
 	data = (t_philo *)arg;
 	while (1)
 	{
-		usleep(100);
 		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 1)
 		{
@@ -68,8 +67,10 @@ void	*eat_count_check_routine(void *arg)
 			pthread_mutex_unlock(&data->philo_died);
 		if (data->number_of_meal != -1 && every_philo_ate(data) == 1)
 		{
+			pthread_mutex_lock(&data->philo_died);
 			printf(GREEN "Everyone ate enough\n" RESET);
 			data->one_philo_died = 1;
+			pthread_mutex_unlock(&data->philo_died);
 			return (NULL);
 		}
 		id = (id + 1) % data->nb_of_philosophers;
@@ -89,7 +90,7 @@ void	*philo_routine(void *arg)
 	while (1)
 	{
 		if (id % 2 == 0)
-			usleep(100);
+			usleep(5 * 1000);
 		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 1)
 		{
@@ -109,6 +110,9 @@ void	ft_join(t_philo *data, pthread_t death_check_thread,
 	void	*return_value;
 
 	id = 0;
+	if (data->number_of_meal != -1)
+		pthread_create(&eat_count_check_thread, NULL, eat_count_check_routine,
+			(void*)data);
 	while (id < data->nb_of_philosophers)
 	{
 		pthread_join(data->philo[id], &return_value);

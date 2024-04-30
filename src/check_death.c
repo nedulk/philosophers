@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:41:06 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 16:49:29 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:38:21 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	print_death_message(t_philo *data, int id)
 	pthread_mutex_lock(&data->time_mutex);
 	printf(RED "%ld %d died\n" RESET,
 		(data->stop_time - data->start_time), id + 1);
+	pthread_mutex_unlock(&data->philo_died);
 	pthread_mutex_unlock(&data->time_mutex);
 }
 
@@ -35,7 +36,7 @@ int	check_initial_death(t_philo *data, int id, int stop_m_start)
 		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 0)
 		{
-			pthread_mutex_unlock(&data->philo_died);
+			data->one_philo_died = 1;
 			print_death_message(data, id);
 		}
 		else
@@ -61,6 +62,7 @@ int	check_later_death(t_philo *data, int id)
 		pthread_mutex_lock(&data->philo_died);
 		if (data->one_philo_died == 0)
 		{
+			data->one_philo_died = 1;
 			pthread_mutex_unlock(&data->philo_died);
 			print_death_message(data, id);
 		}

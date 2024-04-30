@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:17:57 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/27 13:12:15 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:59:48 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,14 @@ void	start_routine(t_philo *data)
 	{
 		philo_data[id].data = data;
 		philo_data[id].id = id;
+		if (id % 2 == 0)
+			usleep(3 * 1000);
 		pthread_create(&(data->philo[id]), NULL,
 			philo_routine, (void*)&philo_data[id]);
 		id++;
 	}
-	usleep(100);
 	pthread_create(&death_check_thread, NULL, death_check_routine,
 		(void*)data);
-	if (data->number_of_meal != -1)
-		pthread_create(&eat_count_check_thread, NULL, eat_count_check_routine,
-			(void*)data);
 	ft_join(data, death_check_thread, eat_count_check_thread);
 	free(philo_data);
 }

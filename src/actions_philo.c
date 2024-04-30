@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:34:28 by kleden            #+#    #+#             */
-/*   Updated: 2024/04/26 16:49:14 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:52:55 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	eat(t_philo *data, int id)
 	pthread_mutex_lock(&data->philo_died);
 	if (data->one_philo_died == 0)
 	{
-		pthread_mutex_unlock(&data->philo_died);
 		pthread_mutex_lock(&data->time_mutex);
 		printf("%ld %d is eating\n",
 			(data->stop_time - data->start_time), id + 1);
+		pthread_mutex_unlock(&data->philo_died);
 		pthread_mutex_unlock(&data->time_mutex);
 	}
 	else
@@ -47,10 +47,10 @@ void	think(t_philo *data, int id)
 	pthread_mutex_lock(&data->philo_died);
 	if (data->one_philo_died == 0)
 	{
-		pthread_mutex_unlock(&data->philo_died);
 		pthread_mutex_lock(&data->time_mutex);
 		printf("%ld %d is thinking\n",
 			(data->stop_time - data->start_time), id + 1);
+		pthread_mutex_unlock(&data->philo_died);
 		pthread_mutex_unlock(&data->time_mutex);
 	}
 	else
