@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/30 19:00:40 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:04:25 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ void	*eat_count_check_routine(void *arg)
 			pthread_mutex_unlock(&data->philo_died);
 			return (NULL);
 		}
-		else
-			pthread_mutex_unlock(&data->philo_died);
+		pthread_mutex_unlock(&data->philo_died);
 		if (data->number_of_meal != -1 && every_philo_ate(data) == 1)
 		{
 			pthread_mutex_lock(&data->philo_died);
