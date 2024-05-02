@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 13:47:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/30 19:04:25 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:32:58 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	every_philo_ate(t_philo *data)
 	id = 0;
 	while (id < data->nb_of_philosophers)
 	{
-		if (data->eat_count[id] <= data->number_of_meal)
+		if (data->eat_count[id] < data->number_of_meal)
 		{
 			pthread_mutex_unlock(&data->eat_count_mutex);
 			return (0);

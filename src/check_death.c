@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:41:06 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/30 17:38:21 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:45:46 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	check_later_death(t_philo *data, int id)
 		if (data->one_philo_died == 0)
 		{
 			data->one_philo_died = 1;
-			pthread_mutex_unlock(&data->philo_died);
 			print_death_message(data, id);
 		}
 		else
