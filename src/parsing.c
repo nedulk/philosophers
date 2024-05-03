@@ -6,7 +6,7 @@
 /*   By: kprigent <kprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 11:21:46 by kprigent          #+#    #+#             */
-/*   Updated: 2024/04/26 15:52:49 by kprigent         ###   ########.fr       */
+/*   Updated: 2024/05/03 08:56:27 by kprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	fix_and_check_length(char **argv, int i)
 	long int	argument_value;
 
 	argument_value = ft_atoi(argv[i]);
-	if (argument_value < 0)
+	if (argument_value < 0 && (ft_strlen(argv[i]) > 10))
 	{
 		printf(RED "Error: Argument %d is too big.\n" RESET, i);
 		printf(YELLOW"Please choose a number between 0 and 2147483647.\n"RESET);
